@@ -1,0 +1,36 @@
+<div class="pdf-viewer-container">
+  <h1>Welcome to E-learning Platform</h1>
+  <h2>You can read online and save the state , also download the book (if you are agree with the terms)</h2>
+
+  <select (change)="selectBook()" [(ngModel)]="bookName">
+    <option value="angular.pdf">Angular</option>
+    <option value="signals.pdf">Signals</option>
+  </select>
+
+  <label for="acceptTerms">
+    Do you agree with the terms of download?
+  </label>
+
+  <input [(ngModel)]="acceptTerms" id="acceptTerms" type="checkbox" (ngModelChange)="activateDownload()" />
+
+
+  <ng-container *ngIf="bookName">
+   <div class="pay-wall" *ngIf="showMessageWall">
+      <h1>You reach limit to read </h1>
+
+      <button (click)="showMessageWall = false"> close</button>
+    </div>
+    <kendo-pdfviewer
+    #pdfViewer
+                  [tools]="toolbarOptions"
+                  [saveFileName]="bookName"
+                  [url]="pdfAssetUrl"
+                  style="height: 600px;"
+                  (pageChange)="saveCurrentPage($event)"
+                   (load)="loadPage()"
+    >
+    </kendo-pdfviewer>
+
+  </ng-container>
+
+</div>
